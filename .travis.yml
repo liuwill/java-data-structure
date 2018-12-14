@@ -1,0 +1,15 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+before_script:
+  # Change Gradle wrapper permissions
+  - chmod +x gradlew
+
+script:
+  - ./gradlew clean check --info
+  - ./gradlew codeCoverageReport
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
