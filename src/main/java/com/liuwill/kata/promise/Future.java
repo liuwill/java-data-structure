@@ -3,6 +3,7 @@ package com.liuwill.kata.promise;
 public class Future<T> {
     private Caller<T> caller;
     private Ticket<T> ticket;
+    private T nextResult = null;
 
     public Future(Caller<T> caller) {
         this.caller = caller;
@@ -10,20 +11,30 @@ public class Future<T> {
     }
 
     Future<T> then(Action<T> action) {
-        return new Future<T>((tick) -> {
+        this.caller.next(this.ticket);
+        T callResult = this.ticket.prevTicketData();
+
+        Future<T> nextFuture = new Future<T>((tick) -> {
             try {
-                this.caller.next(this.ticket);
-                T callResult = this.ticket.lastTicketData();
-                tick.resolve(action.done(callResult));
+                tick.resolve(this.nextResult);
             } catch (Exception exception) {
                 tick.reject(exception);
             }
         });
+
+        try {
+            this.nextResult = action.done(callResult);
+        } catch (Exception exception) {
+            nextFuture.ticket.reject(exception);
+        }
+
+        return nextFuture;
     }
 
-    Future<T> catchError(Exception exception) {
+    Future<T> catchError(ErrorHandler<T> errorHandler) {
+        this.ticket.setErrorHandler(errorHandler);
         return new Future<T>((tick) -> {
-            tick.reject(exception);
+            tick.reject(this.ticket.getException());
         });
     }
 }

@@ -6,6 +6,10 @@ public interface Ticket<T> {
 
     void reject(Exception exception);
 
-    T lastTicketData();
+    Exception getException();
+
+    void setErrorHandler(ErrorHandler errorHandler);
+
+    T prevTicketData();
 
 }
