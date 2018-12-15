@@ -2,7 +2,6 @@ package com.liuwill.kata.promise;
 
 public interface Caller<T> {
 
-    T resolve(T response);
+    T next(Ticket<T> tick);
 
-    T reject(Exception exception);
 }
