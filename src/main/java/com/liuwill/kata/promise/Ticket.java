@@ -2,8 +2,10 @@ package com.liuwill.kata.promise;
 
 public interface Ticket<T> {
 
-    T resolve(T response);
+    void resolve(T response);
 
     void reject(Exception exception);
+
+    T lastTicketData();
 
 }

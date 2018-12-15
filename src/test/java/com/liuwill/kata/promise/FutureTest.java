@@ -15,7 +15,7 @@ class FutureTest {
     void promiseTest(TestInfo testInfo) {
         Future<Integer> promise = new Future<Integer> ((tick) -> {
             Integer source = 1;
-            return tick.resolve(source++);
+            tick.resolve(source++);
         });
         promise.then((input) -> {
             assertEquals(input, new Integer(2), "Future work as Promise");
