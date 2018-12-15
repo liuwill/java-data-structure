@@ -20,14 +20,18 @@ class FutureTest {
             }
         };
         Integer target = 2;
+        Integer targetThen = 3;
         final Exception targetError = new Exception();
         Future<Integer> promise = new Future<Integer> ((tick) -> {
             Integer source = 1;
             tick.resolve(source+1);
         });
         promise.then((input) -> {
-            sourceMap.put("source", 2);
             assertEquals(input, target, "Future work as Promise resolve");
+            return input + 1;
+        }).then((input) -> {
+            sourceMap.put("source", 2);
+            assertEquals(input, targetThen, "Future work as Promise resolve");
             throw targetError;
         }).catchError((exception) -> {
             assertEquals(exception, targetError, "Future work as Promise reject");
