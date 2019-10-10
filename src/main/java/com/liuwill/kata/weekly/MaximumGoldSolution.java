@@ -46,22 +46,22 @@ class MaximumGoldSolution {
                     }
 
                     visited[x][y] = 1;
-                    if (current > target[i][j]) {
-                        target[i][j] = current;
+                    if (current > target[x][y]) {
+                        target[x][y] = current;
                     }
 
                     stack.push(point);
-                    if (i > 0) {
-                        stack.push(new Integer[] { i - 1, j, current + grid[i - 1][j], 0 });
+                    if (x > 0) {
+                        stack.push(new Integer[] { x - 1, y, current + grid[x - 1][y], 0 });
                     }
-                    if (j > 0) {
-                        stack.push(new Integer[] { i, j - 1, current + grid[i][j - 1], 0 });
+                    if (y > 0) {
+                        stack.push(new Integer[] { x, y - 1, current + grid[x][y - 1], 0 });
                     }
-                    if (i < grid.length - 1) {
-                        stack.push(new Integer[] { i + 1, j, current + grid[i + 1][j], 0 });
+                    if (x < grid.length - 1) {
+                        stack.push(new Integer[] { x + 1, y, current + grid[x + 1][y], 0 });
                     }
-                    if (j < grid[0].length - 1) {
-                        stack.push(new Integer[] { i, j + 1, current + grid[i][j + 1], 0 });
+                    if (y < grid[0].length - 1) {
+                        stack.push(new Integer[] { x, y + 1, current + grid[x][y + 1], 0 });
                     }
                 }
             }
