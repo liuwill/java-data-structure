@@ -11,20 +11,21 @@ import org.junit.jupiter.api.TestInfo;
 @Tag("fast")
 class FutureTest {
 
+    final static HashMap<String, Integer> sourceMap = new HashMap<>();
+    static {
+        sourceMap.put("source", 0);
+    }
+
     @Test
     @DisplayName("test promise future! 😎")
     void promiseTest(TestInfo testInfo) {
-        final HashMap<String, Integer> sourceMap = new HashMap() {
-            {
-                put("source", 0);
-            }
-        };
+
         Integer target = 2;
         Integer targetThen = 3;
         final Exception targetError = new Exception();
-        Future<Integer> promise = new Future<Integer> ((tick) -> {
+        Future<Integer> promise = new Future<Integer>((tick) -> {
             Integer source = 1;
-            tick.resolve(source+1);
+            tick.resolve(source + 1);
         });
         promise.then((input) -> {
             assertEquals(input, target, "Future work as Promise resolve");
