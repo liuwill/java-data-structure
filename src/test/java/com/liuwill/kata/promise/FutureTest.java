@@ -11,7 +11,7 @@ import org.junit.jupiter.api.TestInfo;
 @Tag("fast")
 class FutureTest {
 
-    final static HashMap<String, Integer> sourceMap = new HashMap<>();
+    static HashMap<String, Integer> sourceMap = new HashMap<>();
     static {
         sourceMap.put("source", 0);
     }
